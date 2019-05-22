@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SHAUtils {
+    //SHA256 calculation utility
+
     public static String getHash(String string) {
         MessageDigest digest = null;
         try {

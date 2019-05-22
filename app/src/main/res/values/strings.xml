@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Picgen</string>
     <string name="action_settings">Settings</string>
+    <string name="test_date">TEST DATE</string>
+    <string name="sha256">SHA256</string>
+    <string name="download">Download</string>
+    <string name="blur">Blur</string>
+    <string name="grayscale">Grayscale</string>
 </resources>

@@ -14,18 +14,18 @@ public class Pic {
     //No need for Mutators nor Accessors
 
     @SerializedName("id")
-    public int ID;
+    private int ID;
 
     @SerializedName("author")
-    public String AUTHOR;
+    private String AUTHOR;
 
     @SerializedName("download_url")
-    public String DOWNLOAD_URL;
+    private String DOWNLOAD_URL;
 
-    public String SHA256;
-    public Date DOWNLOAD_DATE;
+    private String SHA256;
+    private Date DOWNLOAD_DATE;
 
-    public Drawable DRAWABLE;
+    private Drawable DRAWABLE;
 
     public Pic(int ID, String AUTHOR, String DOWNLOAD_URL) {
         this.ID = ID;
@@ -46,5 +46,49 @@ public class Pic {
             SHA256 = SHAUtils.getHash(new String(bitmapBytes));
         }
         return SHA256;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getAUTHOR() {
+        return AUTHOR;
+    }
+
+    public void setAUTHOR(String AUTHOR) {
+        this.AUTHOR = AUTHOR;
+    }
+
+    public String getDOWNLOAD_URL() {
+        return DOWNLOAD_URL;
+    }
+
+    public void setDOWNLOAD_URL(String DOWNLOAD_URL) {
+        this.DOWNLOAD_URL = DOWNLOAD_URL;
+    }
+
+    public void setSHA256(String SHA256) {
+        this.SHA256 = SHA256;
+    }
+
+    public Date getDOWNLOAD_DATE() {
+        return DOWNLOAD_DATE;
+    }
+
+    public void setDOWNLOAD_DATE(Date DOWNLOAD_DATE) {
+        this.DOWNLOAD_DATE = DOWNLOAD_DATE;
+    }
+
+    public Drawable getDRAWABLE() {
+        return DRAWABLE;
+    }
+
+    public void setDRAWABLE(Drawable DRAWABLE) {
+        this.DRAWABLE = DRAWABLE;
     }
 }

@@ -76,10 +76,10 @@ public class PicsRenderer
     @OnClick(R.id.btn_pic_sha256)
     void onSHA256Clicked() {
         Pic pic = getContent();
-        if(pic.DRAWABLE == null){
+        if(pic.getDRAWABLE() == null){
             pic_view.buildDrawingCache();
             Bitmap bmap = pic_view.getDrawingCache();
-            pic.DRAWABLE = new BitmapDrawable(bmap);
+            pic.setDRAWABLE(new BitmapDrawable(bmap));
         }
         Toast.makeText(getContext(), "Pic SHA256: " + pic.getSHA256(), Toast.LENGTH_LONG)
                 .show();
@@ -89,10 +89,10 @@ public class PicsRenderer
         AppCompatActivity apt = (AppCompatActivity)context;
 
         Pic pic = getContent();
-        if(pic.DRAWABLE == null){
+        if(pic.getDRAWABLE() == null){
             pic_view.buildDrawingCache();
             Bitmap bmap = pic_view.getDrawingCache();
-            pic.DRAWABLE = new BitmapDrawable(bmap);
+            pic.setDRAWABLE(new BitmapDrawable(bmap));
         }
 
         if(Build.VERSION.SDK_INT >= 23){
@@ -102,7 +102,7 @@ public class PicsRenderer
                 }
                 apt.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.REQUEST_STORAGE_ACCESS);
             }else{
-                File PicFile = new File(Environment.getExternalStorageDirectory() + "/PicGen/", "Pic_" + pic.ID + ".jpg");
+                File PicFile = new File(Environment.getExternalStorageDirectory() + "/PicGen/", "Pic_" + pic.getID() + ".jpg");
                 File folder = new File(Environment.getExternalStorageDirectory(), "PicGen");
                 if(!folder.exists()){
                     folder.mkdir();
@@ -115,7 +115,7 @@ public class PicsRenderer
                     pic.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100,fos);
 
                     fos.close();
-                    Toast.makeText(apt, "Pic saved successfully! Location: " + Environment.getExternalStorageDirectory() + "/PicGen/" + "Pic_" + pic.ID + ".jpg", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(apt, "Pic saved successfully! Location: " + Environment.getExternalStorageDirectory() + "/PicGen/" + "Pic_" + pic.getID() + ".jpg", Toast.LENGTH_SHORT).show();
 
                 }catch(Exception e){
                     e.printStackTrace();
@@ -134,14 +134,14 @@ public class PicsRenderer
     }
 
     private void renderPic(Pic pic) {
-        String[] parted = pic.DOWNLOAD_URL.split("/");
+        String[] parted = pic.getDOWNLOAD_URL().split("/");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i <= 4; i++) {
             sb.append(parted[i]).append("/");
         }
-        pic.DOWNLOAD_URL = sb.toString();
+        pic.setDOWNLOAD_URL(sb.toString());
 
-        String url = pic.DOWNLOAD_URL + pic_view.getWidth() + "/" + pic_view.getHeight();
+        String url = pic.getDOWNLOAD_URL() + pic_view.getWidth() + "/" + pic_view.getHeight();
 
         if(MainActivity.is_grayscale || MainActivity.is_blur){
             url += "?";
@@ -158,12 +158,7 @@ public class PicsRenderer
     }
 
     private void renderDownloadDate(Pic pic) {
-        pic.DOWNLOAD_DATE = new Date();
-        this.pic_download_date.setText(pic.DOWNLOAD_DATE.toString());
+        pic.setDOWNLOAD_DATE(new Date());
+        this.pic_download_date.setText(pic.getDOWNLOAD_DATE().toString());
     }
-
-
-
-
-
 }
