@@ -1,8 +1,6 @@
 package com.hmawla.picgen.adapter;
 
 import android.Manifest;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,8 +29,6 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class PicsRenderer
         extends Renderer<Pic> {
@@ -85,10 +81,7 @@ public class PicsRenderer
             Bitmap bmap = pic_view.getDrawingCache();
             pic.setDRAWABLE(new BitmapDrawable(bmap));
         }
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("label", "Text to copy");
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(getContext(), "Pic SHA256 copied to clipboard: " + pic.getSHA256(), Toast.LENGTH_LONG)
+        Toast.makeText(getContext(), "Pic SHA256: " + pic.getSHA256(), Toast.LENGTH_LONG)
                 .show();
     }
     @OnClick(R.id.btn_pic_download)
