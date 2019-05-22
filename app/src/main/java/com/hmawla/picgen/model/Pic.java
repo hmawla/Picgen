@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 public class Pic {
+    //No need for Mutators nor Accessors
 
     @SerializedName("id")
     public int ID;

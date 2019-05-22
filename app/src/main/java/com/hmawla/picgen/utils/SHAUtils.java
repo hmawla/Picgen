@@ -13,6 +13,7 @@ public class SHAUtils {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        assert digest != null;
         digest.reset();
         return bin2hex(digest.digest(string.getBytes()));
     }

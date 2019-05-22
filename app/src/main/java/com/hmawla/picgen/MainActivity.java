@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         pics_recyclerView.setLayoutManager(new LinearLayoutManager(this));
         pics_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (!recyclerView.canScrollVertically(1) && browsablePages.size() != 0) {
@@ -174,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        //pics_recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         pics_recyclerView.setAdapter(adapter);
     }
 
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonArray>() {
 
             @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+            public void onResponse(@NonNull Call<JsonArray> call, @NonNull Response<JsonArray> response) {
                 try {
                     if(response.isSuccessful()){
                         Log.d(TAG, "Response came from server!");
@@ -208,11 +207,9 @@ public class MainActivity extends AppCompatActivity {
                             picsString = response.body().toString();
                             Type listType = new TypeToken<List<Pic>>() {}.getType();
 
-                            //ALL_PICS.addAll(getPicsListFromJson(picsString, listType)) ;
                             if (ALL_PICS != null) {
                                 //Response body parsed successfully
                                 Log.d(TAG, "List downloaded and saved!");
-                                //Log.d(TAG, "First Item: " + ALL_PICS.get(0).DOWNLOAD_DATE);
                                 if(!initialized){
                                     initialized = true;
                                     initAdapter();
@@ -245,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonArray> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonArray> call, @NonNull Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });

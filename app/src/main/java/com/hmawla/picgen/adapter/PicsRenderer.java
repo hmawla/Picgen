@@ -84,6 +84,45 @@ public class PicsRenderer
         Toast.makeText(getContext(), "Pic SHA256: " + pic.getSHA256(), Toast.LENGTH_LONG)
                 .show();
     }
+    @OnClick(R.id.btn_pic_download)
+    void PicFileOutput() {
+        AppCompatActivity apt = (AppCompatActivity)context;
+
+        Pic pic = getContent();
+        if(pic.DRAWABLE == null){
+            pic_view.buildDrawingCache();
+            Bitmap bmap = pic_view.getDrawingCache();
+            pic.DRAWABLE = new BitmapDrawable(bmap);
+        }
+
+        if(Build.VERSION.SDK_INT >= 23){
+            if(apt.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                if(apt.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    Toast.makeText(context, "Please allow storage access to download the file!", Toast.LENGTH_SHORT).show();
+                }
+                apt.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.REQUEST_STORAGE_ACCESS);
+            }else{
+                File PicFile = new File(Environment.getExternalStorageDirectory() + "/PicGen/", "Pic_" + pic.ID + ".jpg");
+                File folder = new File(Environment.getExternalStorageDirectory(), "PicGen");
+                if(!folder.exists()){
+                    folder.mkdir();
+                }
+                FileOutputStream fos;
+                try{
+
+                    fos = new FileOutputStream(PicFile);
+
+                    pic.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100,fos);
+
+                    fos.close();
+                    Toast.makeText(apt, "Pic saved successfully! Location: " + Environment.getExternalStorageDirectory() + "/PicGen/" + "Pic_" + pic.ID + ".jpg", Toast.LENGTH_SHORT).show();
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public void render() {
@@ -123,45 +162,7 @@ public class PicsRenderer
         this.pic_download_date.setText(pic.DOWNLOAD_DATE.toString());
     }
 
-    @OnClick(R.id.btn_pic_download)
-    public void PicFileOutput() {
-        AppCompatActivity apt = (AppCompatActivity)context;
 
-        Pic pic = getContent();
-        if(pic.DRAWABLE == null){
-            pic_view.buildDrawingCache();
-            Bitmap bmap = pic_view.getDrawingCache();
-            pic.DRAWABLE = new BitmapDrawable(bmap);
-        }
-
-        if(Build.VERSION.SDK_INT >= 23){
-            if(apt.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                if(apt.shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Toast.makeText(context, "Please allow storage access to download the file!", Toast.LENGTH_SHORT).show();
-                }
-                apt.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.REQUEST_STORAGE_ACCESS);
-            }else{
-                File PicFile = new File(Environment.getExternalStorageDirectory() + "/PicGen/", "Pic_" + pic.ID + ".jpg");
-                File folder = new File(Environment.getExternalStorageDirectory(), "PicGen");
-                if(!folder.exists()){
-                    folder.mkdir();
-                }
-                FileOutputStream fos;
-                try{
-
-                    fos = new FileOutputStream(PicFile);
-
-                    pic.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100,fos);
-
-                    fos.close();
-                    Toast.makeText(apt, "Pic saved successfully!", Toast.LENGTH_SHORT).show();
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 
 
